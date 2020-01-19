@@ -12,7 +12,7 @@ export function makeLint<TProblemKey>(
     validateProperty: (property: jsonToAst.AstProperty) => LinterProblem<TProblemKey>[],
     validateObject: (property: jsonToAst.AstObject) => LinterProblem<TProblemKey>[]
 ): LinterProblem<TProblemKey>[] {
-
+    
     function walk(
         node: jsonToAst.AstJsonEntity, 
         cbProp: (property: jsonToAst.AstProperty) => void,
@@ -39,12 +39,12 @@ export function makeLint<TProblemKey>(
 
     const errors: LinterProblem<TProblemKey>[] = [];
     const ast: JsonAST = parseJson(json);
-
+    
     if (ast) {
         walk(ast, 
             (property: jsonToAst.AstProperty) => errors.concat(...validateProperty(property)), 
             (obj: jsonToAst.AstObject) => errors.concat(...validateObject(obj)));
     }
-
+    console.info(errors);
     return errors;
 }

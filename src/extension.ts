@@ -1,4 +1,4 @@
-import { readFileSync, readFile } from "fs";
+import { readFileSync } from "fs";
 import { join, resolve, basename } from "path";
 import { bemhtml } from "bem-xjst";
 
@@ -8,8 +8,7 @@ import {
     LanguageClientOptions,
     ServerOptions,
     TransportKind,
-    SettingMonitor,
-    DocumentColorRequest
+    SettingMonitor
 } from 'vscode-languageclient';
 
 const serverBundleRelativePath = join('out', 'server.js');
@@ -21,8 +20,9 @@ let client: LanguageClient;
 const PANELS: Record<string, vscode.WebviewPanel> = {};
 
 const createLanguageClient = (context: vscode.ExtensionContext): LanguageClient => {
+    
     const serverModulePath = context.asAbsolutePath(serverBundleRelativePath);
-
+    
     const serverOptions: ServerOptions = {
         run: {
             module: serverModulePath,
@@ -42,8 +42,7 @@ const createLanguageClient = (context: vscode.ExtensionContext): LanguageClient 
         synchronize: { configurationSection: 'example' }
     };
 
-    client = new LanguageClient('languageServerExample', 'Language Server Example', serverOptions, clientOptions);
-
+    client = new LanguageClient('languageServerExample', 'Language Server Example', serverOptions, clientOptions, true);
     return client;
 };
 
@@ -51,7 +50,7 @@ const getPreviewKey = (doc: vscode.TextDocument): string => doc.uri.path;
 
 const getMediaPath = (context: vscode.ExtensionContext) => vscode.Uri
     .file(context.extensionPath)
-    .with({ scheme: "resource"})
+    .with({ scheme: "vscode-resource"})
     .toString() + '/';
 
 const initPreviewPanel = (document: vscode.TextDocument) => {
@@ -89,7 +88,7 @@ const updateContent = (doc: vscode.TextDocument, context: vscode.ExtensionContex
 
 
             panel.webview.html = previewHtml 
-                .replace(/{{\s+(\w+)\s+}}/g, (str, key) => {
+                .replace(/{{\s*(\w+)\s*}}/g, (str, key) => {
                     switch (key) {
                         case 'content':
                             return html;
@@ -135,6 +134,7 @@ export function activate(context: vscode.ExtensionContext) {
     const previewCommand = vscode.commands.registerCommand('example.showPreviewToSide', () => openPreview(context));
 
     context.subscriptions.push(previewCommand, eventChange);
+
 }
 
 export function deactivate() {

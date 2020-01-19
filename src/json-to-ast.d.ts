@@ -1,11 +1,10 @@
 declare namespace JsonToAst {
+
     export interface AstPosition {
         line: number;
         column: number;
         offset: number;
     }
-
-
 
     export interface AstLocation {
         start: AstPosition;
@@ -44,7 +43,7 @@ declare namespace JsonToAst {
         raw: string;
     }
 
-    export type AstJsonEntity = AstObject | AstArray | AstLiteral;
+    export type AstJsonEntity = AstObject | AstArray | AstLiteral | AstProperty | AstIdentifier ;
 }
 
 declare function JsonToAst(json: string): JsonToAst.AstJsonEntity;

@@ -10,6 +10,7 @@ import {
 } from 'vscode-languageserver';
 
 import { basename } from 'path';
+import { readFileSync } from "fs";
 
 import * as jsonToAst from "json-to-ast";
 
@@ -23,7 +24,7 @@ let conf: ExampleConfiguration | undefined = undefined;
 conn.onInitialize((params: InitializeParams) => {
     return {
         capabilities: {
-            textDocumentSync: 'always'
+            textDocumentSync: 1
         }
     };
 });
@@ -63,7 +64,7 @@ function GetMessage(key: RuleKeys): string {
 
 async function validateTextDocument(textDocument: TextDocument): Promise<void> {
     const source = basename(textDocument.uri);
-    const json = textDocument.uri;
+    const json: string  = readFileSync(source).toString();
 
     const validateObject = (
         obj: jsonToAst.AstObject
@@ -79,7 +80,7 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
             ? [
                   {
                       key: RuleKeys.UppercaseNamesIsForbidden,
-                      loc: property.key.loc
+                      loc: property.loc
                   }
               ]
             : [];
