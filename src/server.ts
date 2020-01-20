@@ -10,7 +10,6 @@ import {
 } from 'vscode-languageserver';
 
 import { basename } from 'path';
-import { readFileSync } from "fs";
 
 import * as jsonToAst from "json-to-ast";
 
@@ -64,7 +63,7 @@ function GetMessage(key: RuleKeys): string {
 
 async function validateTextDocument(textDocument: TextDocument): Promise<void> {
     const source = basename(textDocument.uri);
-    const json: string  = readFileSync(source).toString();
+    const json = textDocument.getText();
 
     const validateObject = (
         obj: jsonToAst.AstObject
