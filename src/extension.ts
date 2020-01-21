@@ -42,7 +42,7 @@ const createLanguageClient = (context: vscode.ExtensionContext): LanguageClient 
         synchronize: { configurationSection: 'example' }
     };
 
-    client = new LanguageClient('languageServerExample', 'Language Server Example', serverOptions, clientOptions, true);
+    client = new LanguageClient('languageServerExample', 'Language Server Example', serverOptions, clientOptions);
     return client;
 };
 

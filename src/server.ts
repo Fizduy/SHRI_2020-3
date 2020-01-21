@@ -2,7 +2,6 @@ import {
     createConnection,
     ProposedFeatures,
     TextDocuments,
-    InitializeParams,
     TextDocument,
     Diagnostic,
     DiagnosticSeverity,
@@ -20,7 +19,7 @@ let conn = createConnection(ProposedFeatures.all);
 let docs = new TextDocuments();
 let conf: ExampleConfiguration | undefined = undefined;
 
-conn.onInitialize((params: InitializeParams) => {
+conn.onInitialize( () => {
     return {
         capabilities: {
             textDocumentSync: 1
