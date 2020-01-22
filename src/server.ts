@@ -69,7 +69,12 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
     ): LinterProblem<RuleKeys>[] =>
         obj.children.some(p => p.key.value === 'block')
             ? []
-            : [{ key: RuleKeys.BlockNameIsRequired, loc: obj.loc }];
+            : [
+                {
+                    key: RuleKeys.BlockNameIsRequired,
+                    loc: obj.loc
+                }
+            ];
 
     const validateProperty = (
         property: jsonToAst.AstProperty

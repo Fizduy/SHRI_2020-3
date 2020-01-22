@@ -45,6 +45,5 @@ export function makeLint<TProblemKey>(
             (property: jsonToAst.AstProperty) => errors.push(...validateProperty(property)), 
             (obj: jsonToAst.AstObject) => errors.push(...validateObject(obj)));
     }
-    console.info(errors);
     return errors;
 }

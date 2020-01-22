@@ -43,7 +43,7 @@ declare namespace JsonToAst {
         raw: string;
     }
 
-    export type AstJsonEntity = AstObject | AstArray | AstLiteral | AstProperty | AstIdentifier ;
+    export type AstJsonEntity = AstObject | AstArray | AstLiteral;
 }
 
 declare function JsonToAst(json: string): JsonToAst.AstJsonEntity;
